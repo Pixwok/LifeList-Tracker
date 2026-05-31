@@ -1,12 +1,15 @@
+# main.py
 from fastapi import FastAPI
+from app.database import engine, Base
+from app.models import *
+from app.api import Goals
 
 app = FastAPI()
 
+## Création des tables si n'existe pas
+@app.on_event("startup")
+def create_tables():
+    Base.metadata.create_all(bind=engine)
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
 
-@app.get("/goal/{item_id}")
-def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
+app.include_router(Goals.router)
