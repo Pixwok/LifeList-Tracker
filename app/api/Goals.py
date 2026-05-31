@@ -10,6 +10,12 @@ router = APIRouter(prefix="/goals", tags=["goals"])
 def list_goals(db: Session = Depends(get_db)):
     return db.query(models.Goals).all()
 
+# Récupère un objectif
+@router.get("/{goal_id}")
+def get_goal(goal_id: int, db: Session = Depends(get_db)):
+    goal = db.query(models.Goals).filter(models.Goals.id == goal_id).first()
+    return goal
+
 # Créer un objectif
 @router.post("/")
 def create_goal(name: str, categorie_id: int, db: Session = Depends(get_db)):
@@ -18,3 +24,4 @@ def create_goal(name: str, categorie_id: int, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(goal)
     return goal
+

@@ -1,8 +1,8 @@
 # main.py
 from fastapi import FastAPI
 from app.database import engine, Base
-from app.models import *
 from app.api import Goals
+from app.api import Categories
 
 app = FastAPI()
 
@@ -13,3 +13,4 @@ def create_tables():
 
 
 app.include_router(Goals.router)
+app.include_router(Categories.router)
