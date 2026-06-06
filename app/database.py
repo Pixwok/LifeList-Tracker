@@ -12,7 +12,7 @@ class Base(DeclarativeBase):
     pass
 
 #Accès base de donnée
-def get_db() -> Generator[Session, None, None]:
+def get_db() -> Generator:
     db = SessionLocal()
     try:
         yield db        # FastAPI injecte la session dans la route

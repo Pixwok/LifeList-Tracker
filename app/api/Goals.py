@@ -1,67 +1,45 @@
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import JSONResponse
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app import models
+from app.models import Goals
+from app.schemas import GoalResponse, ModifyGoal
+from app.api.response import APIResponse, success_response
 
 router = APIRouter(prefix="/goals", tags=["goals"])
 
 # Récupère tout les objectifs
-@router.get("/")
-def list_goals(db: Session = Depends(get_db)):
-    data = db.query(models.Goals).all()
-    return JSONResponse( 
-        status_code=200,
-        content={
-            "success": True,
-            "data": jsonable_encoder(data),
-            "error": None,
-        }
-    )
+@router.get("/", response_model=APIResponse[list[GoalResponse]])
+def list_goals(limit: int = 10, db: Session = Depends(get_db)):
+    data = db.query(Goals).limit(limit).all()
+    return success_response([GoalResponse.model_validate(d) for d in data])
 
 # Récupère un objectif
-@router.get("/{goal_id}")
+@router.get("/{goal_id}", response_model=APIResponse[GoalResponse])
 def get_goal(goal_id: int, db: Session = Depends(get_db)):
-    goal = db.query(models.Goals).filter(models.Goals.id == goal_id).first()
-    return JSONResponse( 
-        status_code=200,
-        content={
-            "success": True,
-            "data": jsonable_encoder(goal),
-            "error": None,
-        }
-    )
+    goal = db.query(Goals).filter(Goals.id == goal_id).first()
+    if not goal:
+        raise HTTPException(status_code=404, detail="Goal not found")
+    return success_response(GoalResponse.model_validate(goal))
 
 # Créer un objectif
-@router.post("/")
-def create_goal(name: str, categorie_id: int, db: Session = Depends(get_db)):
-    goal = models.Goals(name=name, categorie_id=categorie_id)
+@router.post("/", response_model=APIResponse[GoalResponse])
+def create_goal(goal: ModifyGoal, db: Session = Depends(get_db)):
+    goal = Goals(
+        name=goal.name, 
+        deadline=goal.deadline, 
+        categorie_id=goal.categorie_id
+    )
     db.add(goal)
     db.commit()
     db.refresh(goal)
-    return JSONResponse( 
-        status_code=200,
-        content={
-            "success": True,
-            "data": jsonable_encoder(goal),
-            "error": None,
-        }
-    )
+    return success_response(GoalResponse.model_validate(goal))
 
 # Supprimer un objectifs
-@router.delete("/{goal_id}")
+@router.delete("/{goal_id}", response_model=APIResponse[GoalResponse])
 def delete_goal(goal_id: int, db: Session = Depends(get_db)):
-    goal = db.query(models.Goals).filter(models.Goals.id == goal_id).first()
+    goal = db.query(Goals).filter(Goals.id == goal_id).first()
     if not goal:
         raise HTTPException(status_code=404, detail="Goal not found")
     db.delete(goal)
     db.commit()
-    return JSONResponse( 
-        status_code=200,
-        content={
-            "success": True,
-            "data": jsonable_encoder(goal),
-            "error": None,
-        }
-    )
+    return success_response(GoalResponse.model_validate(goal))
