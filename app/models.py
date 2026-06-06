@@ -22,7 +22,7 @@ class Categories(Base):
     __tablename__ = "categories"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    name: Mapped[str] = mapped_column(String(32), nullable=False)
+    name: Mapped[str] = mapped_column(String(128), nullable=False)
 
     goals: Mapped[list["Goals"]] = relationship("Goals", back_populates="categorie") #Synchro entre objectif et objectifs
 
