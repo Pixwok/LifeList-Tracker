@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Goals
-from app.schemas import GoalResponse, ModifyGoal
+from app.schemas import GoalResponse, CreateGoal, ModifyGoal
 from app.api.response import APIResponse, success_response
 
 router = APIRouter(prefix="/goals", tags=["goals"])
@@ -23,16 +23,29 @@ def get_goal(goal_id: int, db: Session = Depends(get_db)):
 
 # Créer un objectif
 @router.post("/", response_model=APIResponse[GoalResponse])
-def create_goal(goal: ModifyGoal, db: Session = Depends(get_db)):
-    goal = Goals(
+def create_goal(goal: CreateGoal, db: Session = Depends(get_db)):
+    data = Goals(
         name=goal.name, 
         deadline=goal.deadline, 
         categorie_id=goal.categorie_id
     )
-    db.add(goal)
+    db.add(data)
     db.commit()
-    db.refresh(goal)
-    return success_response(GoalResponse.model_validate(goal))
+    db.refresh(data)
+    return success_response(GoalResponse.model_validate(data))
+
+# Modification objectif
+@router.put("/{goal_id}", response_model=APIResponse[GoalResponse])
+def edit_goal(goal_id: int, goal_edit: ModifyGoal, db: Session = Depends(get_db)):
+    goal_row = db.query(Goals).filter(Goals.id == goal_id).first()
+    editfield = goal_edit.model_dump(exclude_unset=True)
+    
+    for field, value in editfield.items():
+        setattr(goal_row, field, value)
+
+    db.commit()
+    db.refresh(goal_row)    
+    return success_response(GoalResponse.model_validate(goal_row))
 
 # Supprimer un objectifs
 @router.delete("/{goal_id}", response_model=APIResponse[GoalResponse])

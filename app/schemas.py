@@ -23,13 +23,19 @@ class GoalResponse(BaseModel):
 
     model_config = {"from_attributes": True}  # Lecture depuis objet SQLAlchemy
 
-
-class ModifyGoal(BaseModel):
+class CreateGoal(BaseModel):
     name: str
     advancement: float = 0
     statut: bool = False
     deadline: date | None = None
-    categorie_id: int 
+    categorie_id: int | None = None
+
+class ModifyGoal(BaseModel):
+    name: str | None = None
+    advancement: float | None = None
+    statut: bool | None = None
+    deadline: date | None = None
+    categorie_id: int | None = None
 
 ## Validation données tâches
 class TaskResponse(BaseModel):
