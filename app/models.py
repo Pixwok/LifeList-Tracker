@@ -1,6 +1,6 @@
-from sqlalchemy import Integer, String, Float, Boolean, Date, ForeignKey
+from sqlalchemy import Integer, String, Float, Boolean, Date, ForeignKey, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from datetime import date
+from datetime import date, datetime
 from app.database import Base
 
 # Gestion des tables
@@ -14,6 +14,8 @@ class Goals(Base):
     statut: Mapped[bool] = mapped_column(Boolean, default=False)
     deadline: Mapped[date] = mapped_column(Date, nullable=True)
     categorie_id: Mapped[int] = mapped_column(ForeignKey("categories.id"), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(), onupdate=datetime.now())
 
     categorie: Mapped["Categories"] = relationship("Categories", back_populates="goals") #Synchro entre categories et objectifs
     task: Mapped[list["Task"]] = relationship("Task", back_populates= "objectif") #Syncrho entre task et objectifs
@@ -35,5 +37,7 @@ class Task(Base):
     statut: Mapped[bool] = mapped_column(Boolean, default=False)
     deadline: Mapped[date] = mapped_column(Date, nullable=True)
     objectif_id: Mapped[int] = mapped_column(ForeignKey("objectifs.id"), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now(), onupdate=datetime.now())
 
     objectif: Mapped[Goals] = relationship("Goals", back_populates="task") #Synchro entre task et objectifs

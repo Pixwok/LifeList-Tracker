@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from pydantic import BaseModel
 
 ## Validation données catégorie
@@ -20,6 +20,8 @@ class GoalResponse(BaseModel):
     statut: bool
     deadline: date | None
     categorie_id: int
+    created_at: datetime
+    updated_at: datetime
 
     model_config = {"from_attributes": True}  # Lecture depuis objet SQLAlchemy
 
@@ -45,12 +47,21 @@ class TaskResponse(BaseModel):
     statut: bool
     deadline: date | None
     objectif_id: int
+    created_at: datetime
+    updated_at: datetime
 
     model_config = {"from_attributes": True}  # Lecture depuis objet SQLAlchemy
 
-class ModifyTask(BaseModel):
+class CreateTask(BaseModel):
     name: str
     description: str | None = None
-    statut: bool = False
+    statut: bool = False 
     deadline: date | None = None
-    objectif_id: int
+    objectif_id: int | None = None
+
+class ModifyTask(BaseModel):
+    name: str | None = None
+    description: str | None = None
+    statut: bool | None = None 
+    deadline: date | None = None
+    objectif_id: int | None = None
