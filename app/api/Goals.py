@@ -24,6 +24,9 @@ def get_goal(goal_id: int, db: Session = Depends(get_db)):
 # Créer un objectif
 @router.post("/", response_model=APIResponse[GoalResponse])
 def create_goal(goal: CreateGoal, db: Session = Depends(get_db)):
+    if db.query(Goals).filter(Goals.name == goal.name).first():
+        raise HTTPException(status_code=404, detail="Goal name already exist")
+
     data = Goals(
         name=goal.name, 
         deadline=goal.deadline, 
@@ -38,6 +41,12 @@ def create_goal(goal: CreateGoal, db: Session = Depends(get_db)):
 @router.put("/{goal_id}", response_model=APIResponse[GoalResponse])
 def edit_goal(goal_id: int, goal_edit: ModifyGoal, db: Session = Depends(get_db)):
     goal_row = db.query(Goals).filter(Goals.id == goal_id).first()
+
+    if not goal_row:
+        raise HTTPException(status_code=404, detail="Goal not found")
+    if db.query(Goals).filter(Goals.name == goal_edit.name).first():
+        raise HTTPException(status_code=404, detail="Goal name already exist")
+    
     editfield = goal_edit.model_dump(exclude_unset=True)
     
     for field, value in editfield.items():
