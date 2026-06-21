@@ -27,30 +27,33 @@
             <h1>LifeList Tracker</h1>
             <button id="create-obj" class="btn btn-primary">Ajouter un objectif</button>
         </header>
-        <section>
+        <section class="dashboard-stats">
             <h2>Mes objectifs</h2>
             <div class="row">
                 <div class="card">
                     <span>Objectifs actifs</span>
-                    <h3>6</h3>
+                    <h3 id="activeGoals"></h3>
                 </div>
                 <div class="card">
-                    <span>Objectifs terminés ce trimestre</span>
-                    <h3>1</h3>
+                    <span>Objectifs terminés</span>
+                    <h3 id="goalsComplete"></h3>
                 </div>
                 <div class="card">
                     <span>Tâches à faire</span>
-                    <h3>20</h3>
+                    <h3 id="taskTodo"></h3>
                 </div>
                 <div class="card">
                     <span>Echéance à venir</span>
-                    <h3>30 J</h3>
+                    <h3 id="nextDeadLine"></h3>
                 </div>
                 <div class="card">
                     <span>Objectifs en retard</span>
-                    <h3>2</h3>
+                    <h3 id="lateGoal"></h3>
                 </div>
             </div>
+        </section>
+        <section id="goals-list">
+
         </section>
     </main>
 </body>
