@@ -1,0 +1,104 @@
+:root {
+    /*Couleur thème sombre*/
+    --bg-page: #080F1C;
+    --bg-base: #0B1220;
+    --bg-surface: #0F1829;
+    --bg-hover: #152035;
+    --border-color: #1A2B45;
+    --text-primary: #E8EFF8;
+    --text-secondary: #D0DCEE;
+    --text-muted: #7B96BB;
+    --text-hint: #5C7A9E;
+     /* Bleu — couleur principale */
+    --blue-primary: #1565C0;
+    --blue-light: #5B9BF5;
+    --blue-pale: #DDEAF8;
+    --cyan-accent: #67D5F7;
+}
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+html {
+    font-size: 62.5%; /*1rem = 10px*/
+}
+body {
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+}
+/*Font*/
+h1,h2,h3,h4,h5 {font-weight: 600;}
+h1 {font-size: 4.8rem;}
+h2 {font-size: 3.2rem;}
+h3 {font-size: 2.4rem;}
+p,span {color: var(--text-muted);}
+
+a, a:visited {
+    text-decoration: none;
+    color: var(--text-muted);
+}
+/*Nav*/
+#navbar {
+    position: fixed;
+    background-color: #070d18;
+    width: 250px;
+    min-height: 100vh;
+    border-right: solid 1px var(--border-color);
+}
+#burger-btn {
+    height: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+}
+.bar {
+    height: 5px;
+    width: 35px;
+    background-color: var(--text-primary);
+}
+/*Main content*/
+main {
+    min-height: 100vh;
+    margin-left: 262px;
+}
+/*Card*/
+.card {
+    background-color: var(--bg-surface);
+    border: solid 1px var(--border-color);
+    border-radius: 12px;
+    padding: 16px;
+    display: inline-block;
+}
+/*Grid*/
+.row {
+    display: grid;
+    grid-template-columns: repeat(12, max-content);
+    grid-template-rows: 1fr;
+    grid-column-gap: 12px;
+    grid-row-gap: 0px; 
+}
+.col-2 {
+    grid-column: 1 / 2;
+}
+/*Boutons*/
+.btn {
+    font-family: 'Poppins';
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 9px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+}
+.btn-primary {
+    background-color: var(--blue-primary);
+    color: #FFF;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #2b7dd4;
+}

@@ -1,6 +1,7 @@
 # main.py
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse, FileResponse
 from app.database import engine, Base
 from app.api import Goals, Categories, Task
 from app.api.response import error_response
@@ -24,3 +25,9 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 app.include_router(Goals.router)
 app.include_router(Categories.router)
 app.include_router(Task.router)
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+@app.get("/")
+def root():
+    return FileResponse("app/static/index.html")

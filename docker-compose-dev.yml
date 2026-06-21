@@ -21,9 +21,20 @@ services:
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@lifelist-db:5432/${POSTGRES_DB}
     ports:
-      - 80:80
+      - 8080:8080
     volumes:
       - .:/app
-    command: uvicorn app.main:app --host 0.0.0.0 --port 80 --reload
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8080 --reload
     depends_on:
       - database
+  nginx:
+    image: nginx:stable-alpine
+    container_name: lifelist-nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./app/static:/var/www/html
+      - ./site.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
