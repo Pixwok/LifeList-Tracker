@@ -35,36 +35,28 @@ h1,h2,h3,h4,h5 {font-weight: 600;}
 h1 {font-size: 4.8rem;}
 h2 {font-size: 3.2rem;}
 h3 {font-size: 2.4rem;}
+h4 {font-size: 1.8rem;}
 p,span {color: var(--text-muted);}
 
 a, a:visited {
     text-decoration: none;
     color: var(--text-muted);
 }
-/*Nav*/
-#navbar {
-    position: fixed;
-    background-color: #070d18;
-    width: 250px;
-    min-height: 100vh;
-    border-right: solid 1px var(--border-color);
-}
-#burger-btn {
-    height: 35px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    cursor: pointer;
-}
-.bar {
-    height: 5px;
-    width: 35px;
-    background-color: var(--text-primary);
-}
 /*Main content*/
 main {
     min-height: 100vh;
     margin-left: 262px;
+    width: 60%;
+    margin: 4.8rem auto;
+}
+.header-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2.4rem 0;
+}
+section {
+    margin: 2.4rem 0;
 }
 /*Card*/
 .card {
@@ -74,16 +66,28 @@ main {
     padding: 16px;
     display: inline-block;
 }
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+.card-body {
+    margin: 12px 0;
+}
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+}
+.card-link:hover, .card-link:active, .card-link:focus {
+    border-color: var(--blue-light);
+    transform: scale(1.05);
+    transition: all 0.5s;
+}
 /*Grid*/
 .row {
-    display: grid;
-    grid-template-columns: repeat(12, max-content);
-    grid-template-rows: 1fr;
-    grid-column-gap: 12px;
-    grid-row-gap: 0px; 
-}
-.col-2 {
-    grid-column: 1 / 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;  
+    margin: 12px 0;
 }
 /*Boutons*/
 .btn {
@@ -101,4 +105,35 @@ main {
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
     background-color: #2b7dd4;
+}
+/*Tags*/
+.tag {
+    font-size: 1.2rem;
+    padding: 6px 12px;
+    color: var(--blue-light);
+    border-radius: 12px;
+    background-color: #0D2045;
+}
+/*Goals List*/
+#goals-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+.progressBar {
+    width: 300px;
+    height: 10px;
+    appearance: none;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--blue-pale);
+}
+.progressBar::-webkit-progress-bar {
+    background: var(--blue-primary);
+}
+.progressBar::-webkit-progress-value {
+    background: var(--blue-primary);
+}
+.progressBar::-moz-progress-bar {
+    background: var(--blue-primary);
 }

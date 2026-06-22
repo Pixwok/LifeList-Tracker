@@ -12,18 +12,8 @@
 </head>
 <body>
     <script type="module" src="/static/js/main.js"></script>
-    <nav id="navbar">
-        <div id="burger-btn">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <ul id="navlink">
-            <li><a href="#">Dashboard</a></li>
-        </ul>
-    </nav>
     <main>
-        <header>
+        <header class="header-page">
             <h1>LifeList Tracker</h1>
             <button id="create-obj" class="btn btn-primary">Ajouter un objectif</button>
         </header>
@@ -32,7 +22,7 @@
             <div class="row">
                 <div class="card">
                     <span>Objectifs actifs</span>
-                    <h3 id="activeGoals"></h3>
+                    <h3 id="activeGoals"></h3>  
                 </div>
                 <div class="card">
                     <span>Objectifs terminés</span>
@@ -53,7 +43,7 @@
             </div>
         </section>
         <section id="goals-list">
-
+            <!--Insertion card objectif JS-->
         </section>
     </main>
 </body>
