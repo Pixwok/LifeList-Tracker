@@ -117,6 +117,13 @@ if (goal_id) {
             closeModal(event.target.id);
             }
         });
+
+        // Suppression objectif
+        document.querySelector('#delete-goal').addEventListener("click", () => {
+            deleteGoal(goal_id);
+        });
+
+
     } catch (error) {
         window.location.href = '/'; //Redirection
         console.log(error);
@@ -210,4 +217,40 @@ async function editTask(task) {
 
     //Stockage Id task dans form
     document.querySelector('#form-edit-task').setAttribute('data-id', task.id);
+}
+
+function deleteGoal(goalId) {
+    const modalGoalId = document.querySelector('#goal-id');
+    modalGoalId.innerText = goalId;
+    openModalForm('modal-delete-goal');
+
+
+    document.querySelector('#modal-delete-goal').addEventListener('click', (event) => {
+        // Vérifie si l'on clique en dehors du formaulaire
+        if (event.target.classList.contains('modal-overlay') && event.target.classList.contains('open')) {
+        closeModal(event.target.id);
+        }
+    });
+
+    document.querySelector('#cancel-delete').addEventListener('click', () => {
+        closeModal('modal-delete-goal');
+    });
+
+    document.querySelector('#confirm-delete').addEventListener('click', async () => {
+        //Suppression des tâches associé
+        const taskForGoal = await fetchJSON(`/goals/${goal_id}/task`);
+        for (const task of taskForGoal.data) {
+            const deleteRequest = await fetchJSON(`/task/${task.id}`, {
+                method: 'DELETE'
+            });
+        }
+        //Suppression objectif
+        const deleteRequest = await fetchJSON(`/goals/${goal_id}`, {
+            method: 'DELETE'
+        });
+
+        if (deleteRequest.success) {
+            window.location.href = '/';
+        }
+    });
 }

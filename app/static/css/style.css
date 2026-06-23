@@ -56,6 +56,14 @@ main {
     align-items: center;
     margin: 2.4rem 0;
 }
+.header-right {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+.header-right svg:hover {
+    fill: var(--blue-primary);
+}
 .header-btn {
     display: flex;
     gap: 12px;
