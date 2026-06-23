@@ -119,6 +119,11 @@ section {
 .btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus {
     background: #0D1E38;
 }
+.btn-danger {
+    background: transparent;
+    color: #E06060;
+    border: 1px solid #5A2020;
+}
 /*Tags*/
 .tag {
     font-size: 1.2rem;
@@ -186,4 +191,61 @@ section {
     padding: 12px;
     border-radius: 6px;
     color: var(--text-primary);
+}
+/*Goal-info*/
+#goal-info {
+    display: flex;
+    gap: 24px;
+}
+/*Task*/
+.task-todo {
+    margin: 24px 0;
+}
+.task-complete {
+    margin: 24px 0;
+}
+.task {
+    border-bottom: solid 1px var(--border-color);
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+.task input[type="checkbox"] {
+    appearance: none; /* Désactive le style par défaut */
+    -webkit-appearance: none; /* Pour Safari */
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%; /* Rend le bord rond */
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
+    position: relative;
+    background-color: var(--text-primary);
+    transition: background-color 0.2s, border-color 0.2s;
+}
+.task input[type="checkbox"]:checked {
+  background-color: var(--blue-primary); /* Vert pour indiquer "terminé" */
+  border-color: var(--blue-primary);
+}
+.task input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--blue-pale);
+  font-size: 12px;
+  line-height: 1;
+}
+.task-left {
+    display: flex;
+    align-items: center;
+}
+.task-content {
+    margin-left: 24px;
+}
+.task-deadline {
+    align-self: flex-start;
 }

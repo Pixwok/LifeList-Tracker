@@ -34,7 +34,7 @@ async function Dashboard() {
     GoalContainer.innerHTML = "";
 
     for (const element of activeGoal) {
-        const linkCard = createElement('a', {href: '/', class: 'card-link'});
+        const linkCard = createElement('a', {href: `/static/goal.html?id=${element.id}`, class: 'card-link'});
         const card = createElement('div', {class: 'card'});
         const cardHeader = createElement('div', {class: 'card-header'});
         const spanCategory = createElement('span', {class: 'tag'});

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <title>LifeList Tracker</title>
+</head>
+<body>
+    <script type="module" src="/static/js/goal.js"></script>
+    <main>
+        <header class="header-page">
+            <h1 id="goal-name"></h1>
+            <div class="header-btn">
+                <button id="create-task" class="btn btn-primary">Créer une tâche</button>
+                <button id="edit-goal" class="btn btn-secondary">Modifier l'objectif</button>
+                <button id="delete-goal" class="btn btn-danger">Supprimer l'objectif</button>
+            </div>
+        </header>
+        <div id="goal-info">
+            <!--Insertion JS-->
+        </div>
+        <div class="task-container">
+            <div class="task-todo">
+                <h2>Tâches en cours</h2>
+                <ul id="taskTodo-List"></ul>
+            </div>
+            <div class="task-complete">
+                <h2>Tâches terminées</h2>
+                <ul id="taskComplete-List"></ul>
+            </div>
+        </div>
+    </main>
+
+    <!--Form edition objectif-->
+    <div class="modal-overlay" id="modal-edit-goal">
+        <div class="modal">
+            <form id="form-edit-goal" class="modal-form">
+                <label for="goal-name">Objectif</label>
+                <input type="text" name="name" id="goal-name" class="input-form">
+                <label for="goal-deadline">Deadline</label>
+                <input type="date" name="deadline" id="goal-deadline" class="input-form">
+                <label for="goal-categorie">Catégorie</label>
+                <select name="categorie" id="goal-categorie" class="select-form">
+                </select>
+                <input type="submit" value="Créer" class="btn btn-primary" id="goal-submit">
+            </form>
+        </div>
+    </div>
+
+    <!--Edition tâche-->
+    <div class="modal-overlay" id="modal-edit-task">
+        <div class="modal">
+            <form id="form-edit-task" class="modal-form">
+                <label for="task-name">Nom</label>
+                <input type="text" name="name" id="task-name" class="input-form">
+                <label for="task-desc">Description</label>
+                <input type="text" name="description" id="task-desc" class="input-form">
+                <label for="task-deadline">Deadline</label>
+                <input type="date" name="deadline" id="task-deadline" class="input-form">
+                <input type="submit" value="Créer" class="btn btn-primary" id="goal-submit">
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
