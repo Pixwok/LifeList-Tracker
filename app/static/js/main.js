@@ -1,5 +1,6 @@
 import { fetchJSON } from "./api.js";
 import { createElement } from "./dom.js";
+import { openModalForm, closeModal, initForm } from "./form.js";
 
 /*Dashboard objectifs*/
 async function Dashboard() {
@@ -67,3 +68,80 @@ async function Dashboard() {
 }
 
 Dashboard();
+
+initForm();
+document.querySelector('#create-obj').addEventListener('click', () => {
+    openModalForm('modal-create-goal')
+});
+
+document.querySelector('#modal-create-goal').addEventListener('click', (event) => {
+    // Vérifie si l'on clique en dehors du formaulaire
+    if (event.target.classList.contains('modal-overlay') && event.target.classList.contains('open')) {
+      closeModal(event.target.id);
+    }
+});
+
+//Formulaire add objectif
+const categorie = await fetchJSON('/categories/');
+const selectForm = document.querySelector('#goal-categorie');
+categorie.data.forEach(element => {
+    const optionForm = createElement('option', {value: element.id});
+    optionForm.innerText = element.name;
+    selectForm.append(optionForm);
+});
+
+async function createGoalRequest(body) {
+    const response = await fetchJSON('/goals', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body)
+    });
+    return response;
+}
+
+
+const formCreateGoal= document.querySelector('#form-create-goal')
+formCreateGoal.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const request = await createGoalRequest(
+        {
+            "name": formCreateGoal.elements.name.value,
+            "deadline": formCreateGoal.elements.deadline.value,
+            "categorie_id": formCreateGoal.elements.categorie.value
+        }
+    );
+
+    if (request.success) {
+        window.location.reload();
+        formCreateGoal.reset();
+    }
+});
+
+// Formulaire ajout categorie
+document.querySelector('#create-category').addEventListener('click', () => {
+    openModalForm('modal-create-category')
+});
+
+document.querySelector('#modal-create-category').addEventListener('click', (event) => {
+    // Vérifie si l'on clique en dehors du formaulaire
+    if (event.target.classList.contains('modal-overlay') && event.target.classList.contains('open')) {
+      closeModal(event.target.id);
+    }
+});
+
+const formCreateCategory = document.querySelector('#form-create-category');
+formCreateCategory.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const request = await fetchJSON('/categories', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            "name": formCreateCategory.elements.name.value
+        })
+    });
+
+    if (request.success) {
+        window.location.reload();
+        formCreateCategory.reset();
+    }
+})

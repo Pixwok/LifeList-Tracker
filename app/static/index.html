@@ -15,7 +15,10 @@
     <main>
         <header class="header-page">
             <h1>LifeList Tracker</h1>
-            <button id="create-obj" class="btn btn-primary">Ajouter un objectif</button>
+            <div class="header-btn">
+                <button id="create-obj" class="btn btn-primary">Ajouter un objectif</button>
+                <button id="create-category" class="btn btn-secondary">Ajouter une catégorie</button>
+            </div>
         </header>
         <section class="dashboard-stats">
             <h2>Mes objectifs</h2>
@@ -46,5 +49,32 @@
             <!--Insertion card objectif JS-->
         </section>
     </main>
+
+    <!--Form création objectifs-->
+    <div class="modal-overlay" id="modal-create-goal">
+        <div class="modal">
+            <form id="form-create-goal" class="modal-form">
+                <label for="goal-name">Objectif</label>
+                <input type="text" name="name" id="goal-name" class="input-form">
+                <label for="goal-deadline">Deadline</label>
+                <input type="date" name="deadline" id="goal-deadline" class="input-form">
+                <label for="goal-categorie">Catégorie</label>
+                <select name="categorie" id="goal-categorie" class="select-form">
+                </select>
+                <input type="submit" value="Créer" class="btn btn-primary" id="goal-submit">
+            </form>
+        </div>
+    </div>
+
+    <!--Form création catégorie-->
+    <div class="modal-overlay" id="modal-create-category">
+        <div class="modal">
+            <form id="form-create-category" class="modal-form">
+                <label for="category-name">Nom</label>
+                <input type="text" name="name" id="category-name" class="input-form">
+                <input type="submit" value="Créer" class="btn btn-primary" id="category-submit">
+            </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -9,8 +9,8 @@ router = APIRouter(prefix="/goals", tags=["goals"])
 
 # Récupère tout les objectifs
 @router.get("/", response_model=APIResponse[list[GoalResponse]])
-def list_goals(limit: int = 10, db: Session = Depends(get_db)):
-    data = db.query(Goals).limit(limit).all()
+def list_goals(db: Session = Depends(get_db)):
+    data = db.query(Goals).all()
     return success_response([GoalResponse.model_validate(d) for d in data])
 
 # Récupère un objectif

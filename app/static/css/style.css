@@ -14,6 +14,7 @@
     --blue-light: #5B9BF5;
     --blue-pale: #DDEAF8;
     --cyan-accent: #67D5F7;
+    --blue-800: #0A2952;
 }
 *, *::after, *::before {
     box-sizing: border-box;
@@ -31,7 +32,7 @@ body {
   color: var(--text-primary);
 }
 /*Font*/
-h1,h2,h3,h4,h5 {font-weight: 600;}
+h1,h2,h3,h4,h5 {font-weight: 600; color: var(--text-primary);}
 h1 {font-size: 4.8rem;}
 h2 {font-size: 3.2rem;}
 h3 {font-size: 2.4rem;}
@@ -54,6 +55,10 @@ main {
     justify-content: space-between;
     align-items: center;
     margin: 2.4rem 0;
+}
+.header-btn {
+    display: flex;
+    gap: 12px;
 }
 section {
     margin: 2.4rem 0;
@@ -106,6 +111,14 @@ section {
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
     background-color: #2b7dd4;
 }
+.btn-secondary {
+    background: transparent;
+    color: #2b7dd4;
+    border: 1px solid #1E3A6E;
+}
+.btn-secondary:hover, .btn-secondary:active, .btn-secondary:focus {
+    background: #0D1E38;
+}
 /*Tags*/
 .tag {
     font-size: 1.2rem;
@@ -136,4 +149,41 @@ section {
 }
 .progressBar::-moz-progress-bar {
     background: var(--blue-primary);
+}
+/*Form*/
+.modal-overlay {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+}
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+.modal {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    width: 100%;
+    max-width: 400px;
+    overflow-y: auto;
+}
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.input-form, .select-form {
+    background-color: var(--border-color);
+    border: 1px solid var(--blue-800);
+    padding: 12px;
+    border-radius: 6px;
+    color: var(--text-primary);
 }

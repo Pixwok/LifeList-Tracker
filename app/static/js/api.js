@@ -1,6 +1,6 @@
 export async function fetchJSON(url, options = {}) {
-    const header = {Accept: 'application/json', ...options.header};
-    const response = await fetch(url, {...options, header});
+    const headers = {Accept: 'application/json', ...options.headers};
+    const response = await fetch(url, {...options, headers});
 
     if (response.ok) {
         return response.json();
