@@ -23,7 +23,7 @@ if (goal_id) {
         const avancement = createElement('span');
         avancement.innerText = "Avancement: " + dataGoal.advancement + "%";
         const deadline = createElement('span');
-        deadline.innerText = "Deadline: " + dataGoal.deadline;
+        deadline.innerText = "Deadline: " + new Date(dataGoal.deadline).toLocaleDateString('fr');
 
         goalInfoContainer.append(categoryTag);
         goalInfoContainer.append(avancement);
@@ -145,6 +145,7 @@ function displayTask(tasks) {
     // Tâches en cours
     tasksTodo.forEach(task => {
         const li = createElement('li', {class: 'task'});
+        const deadlineFormat = new Date(task.deadline);
         li.innerHTML = `
             <div class="task-left">
             <input type="checkbox" data-id="${task.id}" ${task.statut ? 'checked' : ''}>
@@ -153,7 +154,7 @@ function displayTask(tasks) {
             ${task.description ? `<p>${task.description}</p>` : ''}
             </div>
             </div>
-            <span class="task-deadline">${task.deadline}</span>
+            <span class="task-deadline">${deadlineFormat.toLocaleDateString("fr")}</span>
         `;
         todoContainer.appendChild(li);
 
@@ -171,6 +172,7 @@ function displayTask(tasks) {
     // Tâches terminé
     tasksComplete.forEach(task => {
         const li = createElement('li', {class: 'task'});
+        const deadlineFormat = new Date(task.deadline);
         li.innerHTML = `
             <div class="task-left">
             <input type="checkbox" data-id="${task.id}" ${task.statut ? 'checked' : ''}>
@@ -179,7 +181,7 @@ function displayTask(tasks) {
             ${task.description ? `<p>${task.description}</p>` : ''}
             </div>
             </div>
-            <span class="task-deadline">${task.deadline}</span>
+            <span class="task-deadline">${deadlineFormat.toLocaleDateString("fr")}</span>
         `;
         completeContainer.appendChild(li);
 

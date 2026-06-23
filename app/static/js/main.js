@@ -17,7 +17,7 @@ async function Dashboard() {
     // Tâches à faire
     const taskTodo = dataTasks.filter((task) => task.statut == false);
     // Echéance à venir
-    const deadline = dataGoals.toSorted(dataGoals.deadline)[0].deadline;
+    const deadline = dataGoals.sort((a, b) => new Date(a.deadline) - new Date(b.deadline))[0].deadline;
     const deadlineFormat = new Date(deadline);
     const nextDeadline = Math.ceil((deadlineFormat.getTime() - Date.now()) / 86400000 )
     // Objectifs en retard
@@ -33,6 +33,7 @@ async function Dashboard() {
     const GoalContainer = document.getElementById('goals-list');
     GoalContainer.innerHTML = "";
 
+    // Création des cartes objectifs
     for (const element of activeGoal) {
         const linkCard = createElement('a', {href: `/static/goal.html?id=${element.id}`, class: 'card-link'});
         const card = createElement('div', {class: 'card'});
@@ -41,7 +42,8 @@ async function Dashboard() {
         const categorie = await fetchJSON(`/categories/${element.categorie_id}`);
         spanCategory.innerText = categorie.data.name;
         const spanDeadline = createElement('span');
-        spanDeadline.innerText = element.deadline;
+        const deadlineFormat = new Date (element.deadline); 
+        spanDeadline.innerText = deadlineFormat.toLocaleDateString("fr");
         const cardBody = createElement('div', {class: 'card-body'})
         const h4 = createElement('h4');
         h4.innerText = element.name;
@@ -66,6 +68,7 @@ async function Dashboard() {
         cardFooter.append(spanTask);
     }
 }
+
 
 Dashboard();
 
@@ -103,13 +106,15 @@ async function createGoalRequest(body) {
 const formCreateGoal= document.querySelector('#form-create-goal')
 formCreateGoal.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const request = await createGoalRequest(
-        {
+    const request = await fetchJSON('/goals', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
             "name": formCreateGoal.elements.name.value,
             "deadline": formCreateGoal.elements.deadline.value,
             "categorie_id": formCreateGoal.elements.categorie.value
-        }
-    );
+        })
+    });
 
     if (request.success) {
         window.location.reload();
