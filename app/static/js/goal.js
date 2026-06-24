@@ -11,7 +11,7 @@ if (goal_id) {
         const responseGoal = await fetchJSON(`/goals/${goal_id}`);
         const dataGoal = responseGoal.data
 
-        document.querySelector('#goal-name').innerHTML = dataGoal.name;
+        document.querySelector('#goal-name-title').innerHTML = dataGoal.name;
 
         // Goal info
         const goalInfoContainer =  document.querySelector('#goal-info');
@@ -83,30 +83,42 @@ if (goal_id) {
 
         // Edit objectif
         document.querySelector('#edit-goal').addEventListener("click", async () => {
-            openModalForm('modal-edit-goal')
+            openModalForm('modal-edit-goal');
             document.querySelector('#goal-name').value = dataGoal.name;
+            document.querySelector('#goal-advancement').value = dataGoal.advancement;
             document.querySelector('#goal-deadline').value = dataGoal.deadline;
             const categorie = await fetchJSON('/categories/');
             const selectForm = document.querySelector('#goal-categorie');
             categorie.data.forEach(element => {
                 const optionForm = createElement('option', {value: element.id});
                 optionForm.innerText = element.name;
+                if (element.id == dataGoal.categorie_id) {
+                    optionForm.setAttribute("selected", "selected");
+                }
                 selectForm.append(optionForm);
             });
-            console.log(dataGoal);
         });
 
         const formCreateGoal= document.querySelector('#form-edit-goal')
-            formCreateGoal.addEventListener('submit', async (event) => {
+        formCreateGoal.addEventListener('submit', async (event) => {
             event.preventDefault();
+            const formData = new FormData(event.target);
+            const currentData = Object.fromEntries(formData.entries());
+            const modifiedFields =  {};
+            for (const [key, value] of Object.entries(currentData)) {
+                // Si la valeur actuelle est différente de la valeur initiale
+                if (value !== dataGoal[key]) {
+                    modifiedFields[key] = value;
+                    if (formCreateGoal.elements.advancement.value == 100) {
+                        modifiedFields["statut"] = true;
+                    }
+                }
+            }
+
             const response = await fetchJSON(`/goals/${goal_id}`, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    "name": formCreateGoal.elements.name.value,
-                    "deadline": formCreateGoal.elements.deadline.value,
-                    "categorie_id": formCreateGoal.elements.categorie.value
-                })
+                body: JSON.stringify(modifiedFields)
             });
             closeModal('modal-edit-goal');
         });

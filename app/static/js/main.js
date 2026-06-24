@@ -17,11 +17,11 @@ async function Dashboard() {
     // Tâches à faire
     const taskTodo = dataTasks.filter((task) => task.statut == false);
     // Echéance à venir
-    const deadline = dataGoals.sort((a, b) => new Date(a.deadline) - new Date(b.deadline))[0].deadline;
+    const deadline = activeGoal.sort((a, b) => new Date(a.deadline) - new Date(b.deadline))[0].deadline;
     const deadlineFormat = new Date(deadline);
     const nextDeadline = Math.ceil((deadlineFormat.getTime() - Date.now()) / 86400000 )
     // Objectifs en retard
-    const lateGoal = dataGoals.filter((goal) => new Date(goal.deadline) < Date.now()).filter((goal) => goal.statut == false);
+    const lateGoal = activeGoal.filter((goal) => new Date(goal.deadline) < Date.now()).filter((goal) => goal.statut == false);
     //Card KPI
     document.getElementById('activeGoals').innerHTML = activeGoal.length;
     document.getElementById('goalsComplete').innerHTML = completeGoal.length;
@@ -92,16 +92,6 @@ categorie.data.forEach(element => {
     optionForm.innerText = element.name;
     selectForm.append(optionForm);
 });
-
-async function createGoalRequest(body) {
-    const response = await fetchJSON('/goals', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(body)
-    });
-    return response;
-}
-
 
 const formCreateGoal= document.querySelector('#form-create-goal')
 formCreateGoal.addEventListener('submit', async (event) => {
