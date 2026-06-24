@@ -56,7 +56,7 @@ if (goal_id) {
                     })
                 });
             } else {
-                const request = await fetchJSON(`/task`, {
+                const request = await fetchJSON(`/task/`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({

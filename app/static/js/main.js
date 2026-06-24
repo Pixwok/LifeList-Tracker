@@ -4,10 +4,10 @@ import { openModalForm, closeModal, initForm } from "./form.js";
 
 /*Dashboard objectifs*/
 async function Dashboard() {
-    const responseGoals = await fetchJSON("/goals");
+    const responseGoals = await fetchJSON("/goals/");
     const dataGoals = responseGoals.data
 
-    const responseTasks = await fetchJSON("/task");
+    const responseTasks = await fetchJSON("/task/");
     const dataTasks = responseTasks.data
 
     // Objectifs en cours
@@ -96,7 +96,7 @@ categorie.data.forEach(element => {
 const formCreateGoal= document.querySelector('#form-create-goal')
 formCreateGoal.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const request = await fetchJSON('/goals', {
+    const request = await fetchJSON('/goals/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -127,7 +127,7 @@ document.querySelector('#modal-create-category').addEventListener('click', (even
 const formCreateCategory = document.querySelector('#form-create-category');
 formCreateCategory.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const request = await fetchJSON('/categories', {
+    const request = await fetchJSON('/categories/', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
