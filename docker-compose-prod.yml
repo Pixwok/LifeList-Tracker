@@ -24,7 +24,7 @@ services:
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@lifelist-db:5432/${POSTGRES_DB}
     ports:
-      - 8080:8080
+      - ${PORT_BACKEND}:8080
     restart: always
     depends_on:
       - database
@@ -37,8 +37,7 @@ services:
       dockerfile: Dockerfile.nginx.prod
     container_name: lifelist-nginx
     ports:
-      - 80:80
-      - 443:443
+      - ${PORT_NGINX}:80
     restart: always
     depends_on:
       - backend
